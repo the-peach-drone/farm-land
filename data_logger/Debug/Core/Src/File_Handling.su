@@ -1,0 +1,14 @@
+../Core/Src/File_Handling.c:35:6:Send_Uart	16	static
+../Core/Src/File_Handling.c:39:6:send_file	16	static
+../Core/Src/File_Handling.c:46:6:Mount_SD	16	static
+../Core/Src/File_Handling.c:60:6:Unmount_SD	16	static
+../Core/Src/File_Handling.c:68:9:Scan_SD	80	static
+../Core/Src/File_Handling.c:111:9:Format_SD	64	static
+../Core/Src/File_Handling.c:144:9:Write_File	40	static
+../Core/Src/File_Handling.c:203:9:Read_File	40	static
+../Core/Src/File_Handling.c:275:9:Create_File	40	static
+../Core/Src/File_Handling.c:324:9:Update_File	40	static
+../Core/Src/File_Handling.c:388:9:Remove_File	32	static
+../Core/Src/File_Handling.c:423:9:Create_Dir	24	static
+../Core/Src/File_Handling.c:443:6:Check_SD_Space	16	static
+../Core/Src/File_Handling.c:460:9:check_file	32	static
