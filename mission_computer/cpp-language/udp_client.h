@@ -13,7 +13,7 @@
 
 class UdpClient {
     public:
-        UdpClient(const char* ip, const char* port);
+        UdpClient(string ip, int port);
         ~UdpClient();
 
         int getSocket();
@@ -27,8 +27,8 @@ class UdpClient {
         struct sockaddr_in _server_addr;
         socklen_t _server_addr_size;
 
-        const char* _ip;
-        const char* _port;
+        string _ip;
+        int _port;
 
         int _sock;
 

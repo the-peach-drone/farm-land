@@ -15,26 +15,22 @@ int main(int argc, char *argv[])
 	int sock;
 	char message[BUF_SIZE];
 
-	if(argc != 3){
-			printf("Usage: %s <IP> <PORT>\n", argv[0]); //IP: 192.168.6.1, PORT: 14550
-			exit(1);
-	}
+	// if(argc != 3){
+	// 		printf("Usage: %s <IP> <PORT>\n", argv[0]); //IP: 192.168.6.1, PORT: 14550
+	// 		exit(1);
+	// }
 	
-	UdpClient udp_client(argv[1], argv[2]);
+	UdpClient udp_client("192.168.6.1", 14550);
 	sock = udp_client.getSocket();			
 
 	if(sock == -1)
 		error_handling((char*)"socket() error");
 
-	
-	// //fputs("Insert message(q to quit): ", stdout);
-	// //fgets(message, sizeof(message), stdin);
-	// if(!strcmp(message, "q\n") || !strcmp(message, "Q\n"))
-	// 	exit(0);
-		
 	string filename = "20220414";
 	
 	udp_client.requestFile(filename);
+	// udp_client.requestFile("20220412");
+	// udp_client.requestFile("20220413");
 	
 	return 0;
 }

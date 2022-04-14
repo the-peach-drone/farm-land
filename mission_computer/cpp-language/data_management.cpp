@@ -16,6 +16,7 @@ void DataManagement::clearBuf(char* b) {
 
 bool DataManagement::openNewfile(string file_name)
 {
+    file_name.append(".csv");
     if(_writeFile.is_open())
         return 0;
     else {
@@ -27,7 +28,7 @@ bool DataManagement::openNewfile(string file_name)
 // function to receive file
 int DataManagement::saveFile(char* buf, int s)
 {
-    if(_writeFile.is_open())
+    if(!_writeFile.is_open())
         return 0;
 
     int i;
