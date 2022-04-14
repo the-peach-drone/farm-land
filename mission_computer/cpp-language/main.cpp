@@ -14,11 +14,6 @@ int main(int argc, char *argv[])
 {
 	int sock;
 	char message[BUF_SIZE];
-
-	// if(argc != 3){
-	// 		printf("Usage: %s <IP> <PORT>\n", argv[0]); //IP: 192.168.6.1, PORT: 14550
-	// 		exit(1);
-	// }
 	
 	UdpClient udp_client("192.168.6.1", 14550);
 	sock = udp_client.getSocket();			
@@ -30,7 +25,7 @@ int main(int argc, char *argv[])
 	
 	udp_client.requestFile(filename);
 	// udp_client.requestFile("20220412");
-	// udp_client.requestFile("20220413");
+	udp_client.requestFile("20220413");
 	
 	return 0;
 }

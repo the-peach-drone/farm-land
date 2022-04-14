@@ -25,7 +25,7 @@ string UdpClient::encodeMsg(string filename)
 {
 	string str_msg;
 	string start_byte = "#$";
-	string end_byte = ".csv%*\n";
+	string end_byte = ".csv%************************************************\n";
 
 	str_msg = start_byte + filename + end_byte;
 
@@ -46,14 +46,11 @@ bool UdpClient::requestFile(string filename)
 
 	string str_msg = encodeMsg(filename);
 	const char* send_msg = str_msg.c_str();
-	
-	// send_msg = str_msg.c_str();
-	// cout << send_msg << endl;
 
 	int recv_len;
 	
 	sendto(_sock, send_msg, strlen(send_msg), 0, (struct sockaddr*)&_server_addr, sizeof(_server_addr));
-
+	sleep(1);
 	while(1)
 	{
 		// printf("test\n");
@@ -61,7 +58,7 @@ bool UdpClient::requestFile(string filename)
 		_data_man.clearBuf(recv_msg);
 
 		recv_len = recvfrom(_sock, recv_msg, BUF_SIZE, 0, (struct sockaddr*)&_server_addr, &_server_addr_size);
-		//printf("\nreceived byte: %d\n", recv_len);
+		// printf("\nreceived byte: %d\n", recv_len);
 
 		if (_data_man.saveFile(recv_msg, recv_len)) {
 			break;
