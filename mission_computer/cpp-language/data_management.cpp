@@ -14,24 +14,33 @@ void DataManagement::clearBuf(char* b) {
 		b[i] = '\0';
 }
 
-void DataManagement::openNewfile(const char* file_name) {
-    fp = fopen(file_name, "w");
+bool DataManagement::openNewfile(string file_name)
+{
+    if(_writeFile.is_open())
+        return 0;
+    else {
+        _writeFile.open(file_name);
+        return 1;
+    }
 }
 
 // function to receive file
 int DataManagement::saveFile(char* buf, int s)
 {
+    if(_writeFile.is_open())
+        return 0;
+
     int i;
     char ch;
     for (i = 0; i < s; i++) {
         ch = buf[i];
         if (ch == '*') { //EOF
-            fclose(fp);
+            _writeFile.close();
             return 1;
 		}
         else {
         	printf("%c", ch);
-			fputc(ch, fp);   // 파일에 문자 하나씩 저장
+			_writeFile.write(&ch, 1);   // 파일에 문자 하나씩 저장
 		}
     }
     return 0;

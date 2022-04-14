@@ -7,6 +7,8 @@
 #include <string>
 #include <unistd.h>
 
+#include <fstream>
+
 #define BUF_SIZE 64
 #define sendrecvflag 0
 
@@ -17,11 +19,11 @@ class DataManagement
     public: 
         DataManagement();
         ~DataManagement();
-        void openNewfile(const char* file_name);
+        bool openNewfile(string file_name);
         int saveFile(char* buf, int s);
         void clearBuf(char* b);
     private:
-        FILE* fp;
+        ofstream _writeFile;
 
 };
 

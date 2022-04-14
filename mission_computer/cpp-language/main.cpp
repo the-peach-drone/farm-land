@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 	// if(!strcmp(message, "q\n") || !strcmp(message, "Q\n"))
 	// 	exit(0);
 		
-	char filename[30] = "#$20220414.csv%*";
+	string filename = "20220414";
 	
 	udp_client.requestFile(filename);
 	

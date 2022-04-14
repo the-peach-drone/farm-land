@@ -15,10 +15,14 @@ class UdpClient {
     public:
         UdpClient(const char* ip, const char* port);
         ~UdpClient();
+
         int getSocket();
-        int requestFile(char* file_name);
+        bool requestFile(string filename);
+        string encodeMsg(string filename);
 
     private:
+        
+        
         char recv_msg[BUF_SIZE];
         struct sockaddr_in _server_addr;
         socklen_t _server_addr_size;
