@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <arpa/inet.h>
-#include <sys/socket.h>
+#include "main.h"
 
 //사이즈 큰 경우
 //csv 저장 코드 구현
@@ -14,45 +9,7 @@
 //dronebridge
 // ip 192.168.6.1, port 14550
 
-#define BUF_SIZE 64
-
-#define cipherKey 'S'
-#define sendrecvflag 0
-
-FILE* fp;
 void error_handling(char *message);
-
-void clearBuf(char* b) {
-	int i;
-	for (i=0; i <BUF_SIZE; i++)
-		b[i] = '\0';
-}
-
-// function for decryption
-char Cipher(char ch)
-{
-    return ch ^ cipherKey;
-}
-
-// function to receive file
-int recvFile(char* buf, int s)
-{
-    int i;
-    char ch;
-    for (i = 0; i < s; i++) {
-        ch = buf[i];
-        // ch = Cipher(ch);
-        if (ch == '*') {
-			printf("\n");
-            return 1;
-		}
-        else {
-        	printf("%c", ch);
-			fputc(ch, fp);   // 파일에 문자 하나씩 저장
-		}
-    }
-    return 0;
-}
 
 int main(int argc, char *argv[])
 {
