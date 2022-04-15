@@ -1,5 +1,6 @@
 #include "udp_client.h"
 #include <fstream>
+#include <time.h>
 
 UdpClient::UdpClient(string ip, int port) {
 	_ip = ip;
@@ -18,9 +19,9 @@ UdpClient::~UdpClient() {
 
 int UdpClient::getSocket() {
     _sock = socket(PF_INET, SOCK_DGRAM, 0);
-	struct timeval optVal = {5, 0};
+	struct timeval optVal = {3, 0};
 	int optLen = sizeof(optVal);
-	setsockopt(_sock, SOL_SOCKET, SO_RCVTIMEO, &optVal, optLen); //timeout 5s
+	setsockopt(_sock, SOL_SOCKET, SO_RCVTIMEO, &optVal, optLen); //timeout 3s
 	return _sock;
 }
 
@@ -33,6 +34,31 @@ string UdpClient::encodeMsg(string filename)
 	str_msg = start_byte + filename + end_byte;
 
 	return str_msg;
+}
+
+int UdpClient::gettodaydate(){
+    int ldate;
+    time_t clock;
+    struct tm *date;
+    clock = time(0);
+    date = localtime(&clock);
+    ldate = date->tm_year * 100000;
+    ldate += (date->tm_mon + 1) * 1000;
+    ldate += date->tm_mday * 10;
+    ldate += date->tm_wday;
+    ldate += 190000000;
+    ldate /= 10;
+
+    return ldate;
+}
+
+bool UdpClient::requestHistory() {
+    int now = gettodaydate();
+    bool ret = false;
+    while(!ret) {
+        ret = requestFile(to_string(now-1));
+    }
+    return ret;
 }
 
 bool UdpClient::requestFile(string filename) 
