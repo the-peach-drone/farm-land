@@ -52,14 +52,15 @@ bool UdpClient::requestFile(string filename)
 	string str_msg = encodeMsg(filename);
 	const char* send_msg = str_msg.c_str();
 
-	int recv_len;
+	int recv_len = 1;
 	
-	//udp buffer 비우기
+	while(recv_len != -1)
+		recv_len = recvfrom(_sock, recv_msg, BUF_SIZE, MSG_DONTWAIT, (struct sockaddr*)&_server_addr, &_server_addr_size);
+
 	sendto(_sock, send_msg, strlen(send_msg), 0, (struct sockaddr*)&_server_addr, sizeof(_server_addr));
-	sleep(1);
+
 	while(1)
 	{
-		// printf("test\n");
 		_server_addr_size = sizeof(_server_addr);
 		_data_man.clearBuf(recv_msg);
 
@@ -71,7 +72,6 @@ bool UdpClient::requestFile(string filename)
 			requestResult = false;
 			break;
 		}
-		// printf("\nreceived byte: %d\n", recv_len);
 
 		if (_data_man.saveFile(recv_msg, recv_len)) {
 			requestResult = true;
