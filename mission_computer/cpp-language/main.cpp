@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 	if(sock == -1)
 		error_handling((char*)"socket() error");
 	
-	int ret = 0;
+	bool ret = 0;
 	ret = udp_client.requestHistory();
 	
 	return 0;

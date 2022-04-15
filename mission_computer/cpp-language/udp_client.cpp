@@ -36,12 +36,14 @@ string UdpClient::encodeMsg(string filename)
 	return str_msg;
 }
 
-int UdpClient::gettodaydate(){
+int UdpClient::gettodaydate(int eve_offset){
+
     int ldate;
     time_t clock;
     struct tm *date;
-    clock = time(0);
+    clock = time(0) - (24 * 60 * 60 * eve_offset);
     date = localtime(&clock);
+
     ldate = date->tm_year * 100000;
     ldate += (date->tm_mon + 1) * 1000;
     ldate += date->tm_mday * 10;
@@ -52,13 +54,37 @@ int UdpClient::gettodaydate(){
     return ldate;
 }
 
-bool UdpClient::requestHistory() {
-    int now = gettodaydate();
-    bool ret = false;
-    while(!ret) {
-        ret = requestFile(to_string(now-1));
+bool UdpClient::requestHistory() { //last few days
+    int day1 = gettodaydate(2);
+    int day2 = gettodaydate(1);
+    int day3 = gettodaydate(0);
+
+    printf("day1: %d\n", day1);
+    printf("day2: %d\n", day2);
+    printf("day3: %d\n", day3);
+
+    bool day1_ret = false;
+    bool day2_ret = false;
+    bool day3_ret = false;
+
+    while(!day1_ret || !day3_ret || !day3_ret) {
+        while(!day1_ret)
+            day1_ret = requestFile(to_string(day1));
+        printf("sava day1\n");
+        sleep(2);
+
+        while(!day2_ret)
+            day2_ret = requestFile(to_string(day2));
+        printf("sava day2\n");
+        sleep(2);
+        
+        while(!day3_ret)
+            day3_ret = requestFile(to_string(day3));
+        printf("sava day3\n");
+        sleep(2);
     }
-    return ret;
+
+    return true;
 }
 
 bool UdpClient::requestFile(string filename) 

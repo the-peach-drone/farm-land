@@ -21,7 +21,7 @@ class UdpClient {
         string encodeMsg(string filename);
         bool requestHistory();
 
-        int gettodaydate(void);
+        int gettodaydate(int eve_offset);
 
     private:
         char recv_msg[BUF_SIZE];
