@@ -16,11 +16,13 @@ void DataManagement::clearBuf(char* b) {
 
 bool DataManagement::openNewfile(string file_name)
 {
+    string path = "/home/madman/";
     file_name.append(".csv");
+    path.append(file_name);
     if(_writeFile.is_open())
         return 0;
     else {
-        _writeFile.open(file_name);
+        _writeFile.open(path);
         return 1;
     }
 }
