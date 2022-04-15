@@ -21,8 +21,6 @@ class UdpClient {
         string encodeMsg(string filename);
 
     private:
-        
-        
         char recv_msg[BUF_SIZE];
         struct sockaddr_in _server_addr;
         socklen_t _server_addr_size;

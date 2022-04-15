@@ -46,3 +46,13 @@ int DataManagement::saveFile(char* buf, int s)
     }
     return 0;
 }
+
+int DataManagement::closeFile() 
+{
+    if(_writeFile.is_open()) {
+        _writeFile.close();
+        return 1;
+    }
+    else    
+        return 0;
+}

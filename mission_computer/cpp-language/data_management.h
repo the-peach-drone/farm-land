@@ -20,7 +20,10 @@ class DataManagement
         DataManagement();
         ~DataManagement();
         bool openNewfile(string file_name);
+
         int saveFile(char* buf, int s);
+        int closeFile();
+
         void clearBuf(char* b);
     private:
         ofstream _writeFile;
