@@ -19,6 +19,9 @@ class UdpClient {
         int getSocket();
         bool requestFile(string filename);
         string encodeMsg(string filename);
+        bool requestHistory();
+
+        int gettodaydate(void);
 
     private:
         char recv_msg[BUF_SIZE];

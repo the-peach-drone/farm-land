@@ -20,16 +20,9 @@ int main(int argc, char *argv[])
 
 	if(sock == -1)
 		error_handling((char*)"socket() error");
-
-	string filename = "20220414";
 	
 	int ret = 0;
-	while (!ret)
-	{
-		ret = udp_client.requestFile(filename);
-	}
-	// udp_client.requestFile("20220412");
-	// udp_client.requestFile("20220413");
+	ret = udp_client.requestHistory();
 	
 	return 0;
 }
