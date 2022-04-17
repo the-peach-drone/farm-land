@@ -70,17 +70,17 @@ bool UdpClient::requestHistory() { //last few days
     while(!day1_ret || !day3_ret || !day3_ret) {
         while(!day1_ret)
             day1_ret = requestFile(to_string(day1));
-        printf("sava day1\n");
+        printf("save day1\n");
         sleep(2);
 
         while(!day2_ret)
             day2_ret = requestFile(to_string(day2));
-        printf("sava day2\n");
+        printf("save day2\n");
         sleep(2);
         
         while(!day3_ret)
             day3_ret = requestFile(to_string(day3));
-        printf("sava day3\n");
+        printf("save day3\n");
         sleep(2);
     }
 

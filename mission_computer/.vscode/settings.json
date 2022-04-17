@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "bitset": "cpp",
+        "core": "cpp",
+        "ctime": "cpp",
+        "chrono": "cpp",
+        "thread": "cpp"
+    },
+    "ros.distro": "melodic"
+}
