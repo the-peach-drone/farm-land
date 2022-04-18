@@ -20,8 +20,11 @@ class UdpClient {
         bool requestFile(string filename);
         string encodeMsg(string filename);
         bool requestHistory(int last_few_days);
+        bool requestToday();
+        bool saveDate(char* buf, int s);
 
-        int gettodaydate(int eve_offset);
+        int getDayToUtc();
+        int getOtherDay(int eve_offset);
 
     private:
         char recv_msg[BUF_SIZE];
@@ -32,6 +35,9 @@ class UdpClient {
         int _port;
 
         int _sock;
+        int _utc = 0;
+
+        int _today;
 
         DataManagement _data_man;
 };

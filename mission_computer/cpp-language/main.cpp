@@ -9,12 +9,14 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
+#include <time.h>
+
 #define EXIT_SUCCESS 0
 #define EXIT_FAILURE 1
 
 //ssid:DroneBridge ESP32
 //pw: dronebridge
-// 시간, 부팅 순서 디렉터리, 중복파일 처리, 동적할당
+//부팅 순서 디렉터리
 //home/madman -> /home/ubuntu or ~/
 
 static void daemonize(void);

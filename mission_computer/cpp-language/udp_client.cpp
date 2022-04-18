@@ -36,12 +36,13 @@ string UdpClient::encodeMsg(string filename)
 	return str_msg;
 }
 
-int UdpClient::gettodaydate(int eve_offset){
+int UdpClient::getOtherDay(int eve_offset){
 
     int ldate;
     time_t clock;
     struct tm *date;
-    clock = time(0) - (24 * 60 * 60 * eve_offset);
+    clock = _utc - (24 * 60 * 60 * eve_offset);
+	cout << clock << endl;
     date = localtime(&clock);
 
     ldate = date->tm_year * 100000;
@@ -54,13 +55,79 @@ int UdpClient::gettodaydate(int eve_offset){
     return ldate;
 }
 
+int UdpClient::getDayToUtc() {
+
+	int year, month, day;
+    year = _today / 10000;
+    month = (_today -(year *10000)) / 100;
+    day = _today % 100;
+
+    struct tm t = {0};
+    t.tm_year = year - 1900;
+    t.tm_mon = month-1;
+    t.tm_mday = day;
+	_utc = mktime(&t);
+
+    return mktime(&t);
+}
+
+bool UdpClient::requestToday() {
+	const char* send_msg = "#!today********************************************************\n";
+	bool requestResult = false;
+	int recv_len = 0;
+	
+	while(recv_len != -1)
+		recv_len = recvfrom(_sock, recv_msg, BUF_SIZE, MSG_DONTWAIT, (struct sockaddr*)&_server_addr, &_server_addr_size);
+
+	sendto(_sock, send_msg, strlen(send_msg), 0, (struct sockaddr*)&_server_addr, sizeof(_server_addr));
+
+	_server_addr_size = sizeof(_server_addr);
+	_data_man.clearBuf(recv_msg);
+
+	recv_len = recvfrom(_sock, recv_msg, BUF_SIZE, 0, (struct sockaddr*)&_server_addr, &_server_addr_size);
+
+	if(recv_len < 0)
+	{
+		printf("timeout\n");
+		requestResult = false;
+	}
+	else {
+		requestResult = saveDate(recv_msg, recv_len);
+	}
+	return requestResult;
+}
+
+bool UdpClient::saveDate(char* buf, int s) {
+	int i;
+    char ch;
+	string date;
+
+    for (i = 0; i < s; i++) {
+        ch = buf[i];
+        if (ch == '*') { //EOF
+			_today = atoi(date.c_str());
+			cout << "today: " << _today << endl;
+            return 1;
+		}
+        else {
+        	date.append(to_string(ch));
+		}
+    }
+	return 0;
+}
+
 bool UdpClient::requestHistory(int last_few_days) { //last few days
 	int* days = new int[last_few_days];
 	bool* days_ret = new bool[last_few_days];
-	int ret = 1;
+	bool ret = false;
+
+	while(!ret) {
+		ret = requestToday();
+	}
+	getDayToUtc();
 
 	for(int i = 0; i<last_few_days; i++) {
-		days[i] = gettodaydate(i);
+		days[i] = getOtherDay(i);
 		days_ret[i] = false;
 		cout << "day" << i << ": " << days[i] <<endl;
 	}
@@ -71,6 +138,9 @@ bool UdpClient::requestHistory(int last_few_days) { //last few days
 		sleep(2);
 	}
 
+	delete [] days;
+	delete [] days_ret;
+
     return true;
 }
 
@@ -79,7 +149,6 @@ bool UdpClient::requestFile(string filename)
 	bool requestResult = false;
 
 	if(!_data_man.openNewfile(filename)) {
-		cout << "already exist file" << endl;
 		requestResult = true;
 		return requestResult;
 	}
