@@ -19,7 +19,7 @@ UdpClient::~UdpClient() {
 
 int UdpClient::getSocket() {
     _sock = socket(PF_INET, SOCK_DGRAM, 0);
-	struct timeval optVal = {3, 0};
+	struct timeval optVal = {5, 0};
 	int optLen = sizeof(optVal);
 	setsockopt(_sock, SOL_SOCKET, SO_RCVTIMEO, &optVal, optLen); //timeout 3s
 	return _sock;
@@ -54,35 +54,22 @@ int UdpClient::gettodaydate(int eve_offset){
     return ldate;
 }
 
-bool UdpClient::requestHistory() { //last few days
-    int day1 = gettodaydate(2);
-    int day2 = gettodaydate(1);
-    int day3 = gettodaydate(0);
+bool UdpClient::requestHistory(int last_few_days) { //last few days
+	int* days = new int[last_few_days];
+	bool* days_ret = new bool[last_few_days];
+	int ret = 1;
 
-    printf("day1: %d\n", day1);
-    printf("day2: %d\n", day2);
-    printf("day3: %d\n", day3);
-
-    bool day1_ret = false;
-    bool day2_ret = false;
-    bool day3_ret = false;
-
-    while(!day1_ret || !day3_ret || !day3_ret) {
-        while(!day1_ret)
-            day1_ret = requestFile(to_string(day1));
-        printf("save day1\n");
-        sleep(2);
-
-        while(!day2_ret)
-            day2_ret = requestFile(to_string(day2));
-        printf("save day2\n");
-        sleep(2);
-        
-        while(!day3_ret)
-            day3_ret = requestFile(to_string(day3));
-        printf("save day3\n");
-        sleep(2);
-    }
+	for(int i = 0; i<last_few_days; i++) {
+		days[i] = gettodaydate(i);
+		days_ret[i] = false;
+		cout << "day" << i << ": " << days[i] <<endl;
+	}
+    
+    for(int i = 0; i<last_few_days; i++) {
+		while(!days_ret[i])
+			days_ret[i] = requestFile(to_string(days[i]));
+		sleep(2);
+	}
 
     return true;
 }
@@ -93,6 +80,7 @@ bool UdpClient::requestFile(string filename)
 
 	if(!_data_man.openNewfile(filename)) {
 		cout << "already exist file" << endl;
+		requestResult = true;
 		return requestResult;
 	}
 

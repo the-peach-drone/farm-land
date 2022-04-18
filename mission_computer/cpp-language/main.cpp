@@ -14,13 +14,15 @@
 
 //ssid:DroneBridge ESP32
 //pw: dronebridge
+// 시간, 부팅 순서 디렉터리, 중복파일 처리, 동적할당
+//home/madman -> /home/ubuntu or ~/
 
 static void daemonize(void);
 void error_handling(char *message);
 
 int main(int argc, char *argv[])
 {
-	daemonize();
+	//daemonize();
 	int sock;
 	char message[BUF_SIZE];
 	
@@ -31,8 +33,7 @@ int main(int argc, char *argv[])
 		error_handling((char*)"socket() error");
 	
 	bool ret = 0;
-	ret = udp_client.requestHistory();
-	sleep(60);
+	ret = udp_client.requestHistory(5);
 	
 	return 0;
 }

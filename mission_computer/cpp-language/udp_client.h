@@ -19,7 +19,7 @@ class UdpClient {
         int getSocket();
         bool requestFile(string filename);
         string encodeMsg(string filename);
-        bool requestHistory();
+        bool requestHistory(int last_few_days);
 
         int gettodaydate(int eve_offset);
 

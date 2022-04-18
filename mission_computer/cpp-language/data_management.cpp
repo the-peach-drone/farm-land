@@ -19,13 +19,19 @@ bool DataManagement::openNewfile(string file_name)
     string path = "/home/madman/";
     file_name.append(".csv");
     path.append(file_name);
+
     if(_writeFile.is_open())
         return 0;
-    else {
+   
+    if(access(path.c_str(),F_OK) == 0){
+        std::cout << "파일이 존재 합니다." << std::endl;
+        return 0;
+    }else{
+        std::cout << "파일이 존재하지 않습니다." << std::endl;
         _writeFile.open(path);
         return 1;
     }
-}
+ }
 
 // function to receive file
 int DataManagement::saveFile(char* buf, int s)
