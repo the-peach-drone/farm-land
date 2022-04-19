@@ -16,7 +16,7 @@
 
 //ssid:DroneBridge ESP32
 //pw: dronebridge
-//부팅 순서 디렉터리
+//부팅 순서 디렉터리, cmake
 //home/madman -> /home/ubuntu or ~/
 
 static void daemonize(void);

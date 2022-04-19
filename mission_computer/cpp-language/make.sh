@@ -1,0 +1,1 @@
+g++ -std=c++17 -o ./test.out ./main.cpp ./data_management.cpp ./udp_client.cpp -lstdc++fs

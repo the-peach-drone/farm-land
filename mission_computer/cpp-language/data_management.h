@@ -8,10 +8,12 @@
 #include <unistd.h>
 
 #include <fstream>
+#include <filesystem>
 
 #define BUF_SIZE 64
 #define sendrecvflag 0
 
+namespace fs = std::filesystem;
 using namespace std;
 
 class DataManagement
@@ -27,6 +29,7 @@ class DataManagement
         void clearBuf(char* b);
     private:
         ofstream _writeFile;
+        string _path;
 
 };
 

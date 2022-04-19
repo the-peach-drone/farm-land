@@ -1,7 +1,18 @@
 #include "data_management.h"
 
 DataManagement::DataManagement() {
-    
+    uint16_t folder_name = 0;
+    std::string dir = "/home/madman/";
+    dir.append("/files/0");
+
+    while(!fs::create_directories(dir))
+    {
+        dir = "/home/madman/";
+        dir.append("/files/");
+        folder_name++;
+        dir.append(to_string(folder_name));
+    } 
+    _path = dir;
 }
 
 DataManagement::~DataManagement() {
@@ -16,7 +27,7 @@ void DataManagement::clearBuf(char* b) {
 
 bool DataManagement::openNewfile(string file_name)
 {
-    string path = "/home/madman/";
+    string path = _path;
     file_name.append(".csv");
     path.append(file_name);
 
