@@ -2,12 +2,12 @@
 
 DataManagement::DataManagement() {
     uint16_t folder_name = 0;
-    std::string dir = "/home/madman/";
+    std::string dir = "/home/ubuntu/";
     dir.append("/files/0");
 
     while(!fs::create_directories(dir))
     {
-        dir = "/home/madman/";
+        dir = "/home/ubuntu/";
         dir.append("/files/");
         folder_name++;
         dir.append(to_string(folder_name));
