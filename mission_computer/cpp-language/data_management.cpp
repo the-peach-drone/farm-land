@@ -3,7 +3,7 @@
 DataManagement::DataManagement() {
     uint16_t folder_name = 0;
     std::string dir = "/home/ubuntu/";
-    dir.append("/files/0");
+    dir.append("/files/0/");
 
     while(!fs::create_directories(dir))
     {
@@ -37,13 +37,14 @@ bool DataManagement::openNewfile(string file_name)
         _writeFile.close();
     }
    
-    if(access(path.c_str(), F_OK) == 0){
-        std::cout << "already exist file" << std::endl;
-        return 0;
-    }else {
-        _writeFile.open(path);
-        return 1;
-    }
+    // if(access(path.c_str(), F_OK) == 0){
+    //     std::cout << "already exist file" << std::endl;
+    //     return 0;
+    // }
+    // else {
+    _writeFile.open(path);
+    return 1;
+    //}
  }
 
 // function to receive file
