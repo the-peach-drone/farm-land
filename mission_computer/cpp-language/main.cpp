@@ -14,9 +14,9 @@
 #define EXIT_SUCCESS 0
 #define EXIT_FAILURE 1
 
-//ssid:DroneBridge ESP32
-//pw: dronebridge
-//부팅 순서 디렉터리, cmake
+//ssid: farm_land
+//pw: farm_land
+//cmake
 //home/madman -> /home/ubuntu or ~/
 
 static void daemonize(void);
@@ -24,7 +24,7 @@ void error_handling(char *message);
 
 int main(int argc, char *argv[])
 {
-	//daemonize();
+//	daemonize();
 	int sock;
 	char message[BUF_SIZE];
 	

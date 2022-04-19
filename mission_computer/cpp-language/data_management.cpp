@@ -11,7 +11,9 @@ DataManagement::DataManagement() {
         dir.append("/files/");
         folder_name++;
         dir.append(to_string(folder_name));
+        dir.append("/");
     } 
+    cout << _path <<endl;
     _path = dir;
 }
 

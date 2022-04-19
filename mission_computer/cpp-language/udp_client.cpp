@@ -72,7 +72,7 @@ int UdpClient::getDayToUtc() {
 }
 
 bool UdpClient::requestToday() {
-	const char* send_msg = "#!today********************************************************\n";
+	const char* send_msg = "#!today%*******************************************************\n";
 	bool requestResult = false;
 	int recv_len = 0;
 	
@@ -88,10 +88,11 @@ bool UdpClient::requestToday() {
 
 	if(recv_len < 0)
 	{
-		printf("timeout\n");
+		printf("today timeout\n");
 		requestResult = false;
 	}
 	else {
+		cout << recv_msg << endl;
 		requestResult = saveDate(recv_msg, recv_len);
 	}
 	return requestResult;
@@ -110,7 +111,7 @@ bool UdpClient::saveDate(char* buf, int s) {
             return 1;
 		}
         else {
-        	date.append(to_string(ch));
+        	date.append(to_string(ch-'0')); //ascii to string
 		}
     }
 	return 0;
